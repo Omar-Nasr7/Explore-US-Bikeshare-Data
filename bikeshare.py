@@ -17,18 +17,22 @@ def get_filters():
     """
 
     print('Hello! Let\'s explore some US bikeshare data!')
-    # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
 
 
     while True:
       city = input("choose which city you want to filter: New York City, Chicago or Washington")
-      if city not in ('New York City', 'Chicago', 'Washington'):
+       if city.lower() == 'chicago':
+            return 'chicago.csv'
+        elif city.lower() == 'new york':
+            return 'new_york_city.csv'
+        elif city.lower() == 'washington':
+            return 'washington.csv'
+        elif
         print("your input is wrong, can you try again.")
         continue
       else:
         break
 
-    # TO DO: get user input for month (all, january, february, ... , june)
 
     while True:
       month = input("choose the month you want to filter by:January, February, March, April, May, June or type 'all' if you do not have any preference?\n")
@@ -38,7 +42,6 @@ def get_filters():
       else:
         break
 
-    # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
 
     while True:
       day = input("\nchoose the particular day: Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday or type 'all' if you do not have any preference.\n")
@@ -96,20 +99,17 @@ def time_stats(df):
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
 
-    # TO DO: display the most common month
 
     popular_month = df['month'].mode()[0]
     print('Most Common Month:', popular_month)
 
 
-    # TO DO: display the most common day of week
 
     popular_day = df['day_of_week'].mode()[0]
     print('Most Common day:', popular_day)
 
 
 
-    # TO DO: display the most common start hour
 
     df['hour'] = df['Start Time'].dt.hour
     popular_hour = df['hour'].mode()[0]
@@ -126,19 +126,16 @@ def station_stats(df):
     print('\nCalculating The Most Popular Stations and Trip...\n')
     start_time = time.time()
 
-    # TO DO: display most commonly used start station
 
     Start_Station = df['Start Station'].value_counts().idxmax()
     print('Most Commonly used start station:', Start_Station)
 
 
-    # TO DO: display most commonly used end station
 
     End_Station = df['End Station'].value_counts().idxmax()
     print('\nMost Commonly used end station:', End_Station)
 
 
-    # TO DO: display most frequent combination of start station and end station trip
 
     Combination_Station = df.groupby(['Start Station', 'End Station']).count()
     print('\nMost Commonly used combination of start station and end station trip:', Start_Station, " & ", End_Station)
@@ -154,13 +151,11 @@ def trip_duration_stats(df):
     print('\nCalculating Trip Duration...\n')
     start_time = time.time()
 
-    # TO DO: display total travel time
 
     Total_Travel_Time = sum(df['Trip Duration'])
     print('Total travel time:', Total_Travel_Time/86400, " Days")
 
 
-    # TO DO: display mean travel time
 
     Mean_Travel_Time = df['Trip Duration'].mean()
     print('Mean travel time:', Mean_Travel_Time/60, " Minutes")
@@ -176,13 +171,11 @@ def user_stats(df):
     print('\nCalculating User Stats...\n')
     start_time = time.time()
 
-    # TO DO: Display counts of user types
 
     user_types = df['User Type'].value_counts()
     #print(user_types)
     print('User Types:\n', user_types)
 
-    # TO DO: Display counts of gender
 
     try:
       gender_types = df['Gender'].value_counts()
@@ -190,7 +183,6 @@ def user_stats(df):
     except KeyError:
       print("\nGender Types:\nNo data available for this month.")
 
-    # TO DO: Display earliest, most recent, and most common year of birth
 
     try:
       Earliest_Year = df['Birth Year'].min()
@@ -227,7 +219,14 @@ def main():
         restart = input('\n do you want to repeat it again? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
-
+def raw_data(df):
+    while True: 
+        ask_user = input('Would you like to view more raw data for the city selected? \nPrint yes or no: ') 
+        if ask_user == 'yes': 
+            runs += 1 #Adds 1 to current value, same as runs = runs + 1
+            return df.iloc[(x-1)*5:x*5]
+        elif ask_user == 'no':
+            return
 
 if __name__ == "__main__":
     main()
